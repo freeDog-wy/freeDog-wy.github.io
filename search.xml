@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/04/13/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>C语言中那些奇奇怪怪的宏</title>
+    <url>/2024/04/14/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E9%82%A3%E4%BA%9B%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AE%8F/</url>
+    <content><![CDATA[<p>今天整理的一下C语言一些奇奇怪怪的宏，给大家瞧一瞧。</p>
+<span id="more"></span>
+
+<h2 id="TO-STR-添加双引号"><a href="#TO-STR-添加双引号" class="headerlink" title="TO_STR 添加双引号"></a>TO_STR 添加双引号</h2><p>通过在一个标识符前添加 # 号，可以给这个标识符加上双引号。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> TO_STR(x) #x</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, TO_STR(hello world));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, TO_STR(<span class="number">234</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hello world</span><br><span class="line">234</span><br></pre></td></tr></table></figure>
+
+<h2 id="TO-CHAR-添加单引号"><a href="#TO-CHAR-添加单引号" class="headerlink" title="TO_CHAR 添加单引号"></a>TO_CHAR 添加单引号</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> TO_CHAR(x) #@x</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%c\n&quot;</span>, TO_CHAR(a));</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">a</span><br></pre></td></tr></table></figure>
+<p><code>a</code>并不是变量，啥也不是，只是通过预处理器给它套了一个单引号，它就变成字符了。</p>
+<h2 id="PRIMITIVE-CAT-字符拼接"><a href="#PRIMITIVE-CAT-字符拼接" class="headerlink" title="PRIMITIVE_CAT 字符拼接"></a>PRIMITIVE_CAT 字符拼接</h2><p>符号 ## 可以拼接两个标识符。<br>至于为什么这里给它取名叫PRIMITIVE_CAT宏，是因为宏扩展的一个机制，往下看就知道了。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> PRIMITIVE_CAT(x,y)   x ## y</span></span><br><span class="line"><span class="type">int</span> age = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;age: %d\n&quot;</span>, PRIMITIVE_CAT(a, ge));</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">age: 10</span><br></pre></td></tr></table></figure>
+
+<h2 id="CAT-字符拼接"><a href="#CAT-字符拼接" class="headerlink" title="CAT 字符拼接"></a>CAT 字符拼接</h2><p>可能你会感到奇怪，这不就是套了一层皮吗，有啥区别呢？</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CAT(x,y) PRIMITIVE_CAT(x,y)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> X a</span></span><br><span class="line"><span class="type">int</span> age = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, CAT(X, ge));</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">10</span><br></pre></td></tr></table></figure>
+<p>但是如果把上面的 <code>CAT</code> 替换成 <code>PRIMITIVE_CAT</code>，看看会发生啥？</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CAT(a,b) PRIMITIVE_CAT(a,b)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> X a</span></span><br><span class="line"><span class="type">int</span> age = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, PRIMITIVE_CAT(X, ge));</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">找不到变量 Xge</span><br></pre></td></tr></table></figure>
+<p><strong>报错了</strong><br>预处理器直接把 <code>X</code> 拿来拼接了，并没有把 <code>X</code> 替换成 <code>a</code>.<br>那原因是什么呢？</p>
+<p>首先宏函数展开有两种情况：</p>
+<ol>
+<li>参数参与了 ## 或者 # 符号的操作<br> 此时，由于 <code>PRIMITIVE_CAT</code> 宏函数中的参数<code>X Y</code>参与了## 拼接，那么就不会对宏 <code>X Y</code> 进行展开后传入，而是直接传入。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> X 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Y 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> XY 2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PRIMITIVE_CAT(a,b) a##b</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, PRIMITIVE_CAT(X,Y));</span><br></pre></td></tr></table></figure>
+ 所以拼接结果是 <code>PRIMITIVE_CAT(X,Y) -&gt; XY -&gt; 2</code>.<br> 拼接后得到了宏<code>XY</code>，直接展开成 <code>2</code>. <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure></li>
+<li>参数没有参与 ## 或者 # 符号的操作<br> 此时，<code>CAT</code> 宏函数的参数并没有参与拼接，则先对参数 <code>X Y</code>进行展开，分别展开为 <code>0 1</code>，然后传入宏函数。 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> X 0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Y 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CAT(a,b) PRIMITIVE_CAT(a,b)</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, CAT(X,Y));</span><br></pre></td></tr></table></figure>
+ 所以拼接结果是<code>CAT(X,Y) -&gt; PRIMITIVE_CAT(0,1) -&gt; 01</code> <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
+可以看出这两个拼接宏函数，都是很常用的。</li>
+</ol>
+<h2 id="OFFSET-OF-得到一个字段在结构体struct中的偏移量-字节数"><a href="#OFFSET-OF-得到一个字段在结构体struct中的偏移量-字节数" class="headerlink" title="OFFSET_OF 得到一个字段在结构体struct中的偏移量(字节数)"></a>OFFSET_OF 得到一个字段在结构体struct中的偏移量(字节数)</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> OFFSET_OF(type,field) ( (size_t) &amp;(( type *) 0)-&gt; field )</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NAME_SIZE 20</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">char</span> name[NAME_SIZE];</span><br><span class="line">    <span class="type">int</span> score;</span><br><span class="line">    <span class="type">int</span> age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;age offset of struct Person: %u\n&quot;</span>, OFFSET_OF(<span class="keyword">struct</span> Person, age));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">24</span><br></pre></td></tr></table></figure>
+<p>在我的电脑上，<code>int</code>类型是<code>4</code>字节的，<code>char</code>类型是<code>1</code>字节的。所以字段 <code>age</code> 排在 <code>name</code> 和 <code>score</code>的后面，他到结构体首地址偏移就是 <code>24</code>字节。</p>
+<p>什么？你要问这个宏函数原理是啥？<br>这个很简单的，首先上面那个宏函数展开的结果是这个：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">(<span class="type">size_t</span>) &amp;((<span class="keyword">struct</span> Person *)<span class="number">0</span>)-&gt;age</span><br></pre></td></tr></table></figure>
+<p>他把地址为<code>0</code>，强转为一个<code>struct Person *</code>类型，所以它变成了一个指针，然后就可以访问结构体中的 <code>age</code>字段了，再然后通过取地址符 <code>&amp;</code> 得到<code>age</code>字段的地址，很显然，因为结构体首地址是<code>0</code>，所以<code>age</code>字段的地址就是偏移量啦。</p>
+<h2 id="FILED-SIZE-得到一个结构体中字段的大小（字节数）"><a href="#FILED-SIZE-得到一个结构体中字段的大小（字节数）" class="headerlink" title="FILED_SIZE 得到一个结构体中字段的大小（字节数）"></a>FILED_SIZE 得到一个结构体中字段的大小（字节数）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> FILED_SIZE( type, field ) sizeof( ((type *) 0)-&gt;field )</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;filed size of age: %u\n&quot;</span>, FILED_SIZE(<span class="keyword">struct</span> Person, age));</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+<p>在我的电脑上<code>int</code>类型<code>4</code>个字节.</p>
+<h2 id="CONTAINER-OF-根据结构体变量字段地址获取整个结构体的存储空间首地址"><a href="#CONTAINER-OF-根据结构体变量字段地址获取整个结构体的存储空间首地址" class="headerlink" title="CONTAINER_OF 根据结构体变量字段地址获取整个结构体的存储空间首地址"></a>CONTAINER_OF 根据结构体变量字段地址获取整个结构体的存储空间首地址</h2><ul>
+<li><code>ptr</code>：结构体字段的指针</li>
+<li><code>type</code>：结构体类型</li>
+<li><code>filed</code>: 字段名称<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CONTAINER_OF(ptr, type, filed) \</span></span><br><span class="line"><span class="meta">    (type *)((char *)(ptr) - (char *) &amp;((type *)0)-&gt;filed )</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Person</span> <span class="title">p</span> =</span> &#123;</span><br><span class="line">        .name = <span class="string">&quot;dog&quot;</span>,</span><br><span class="line">        .score = <span class="number">30</span>,</span><br><span class="line">        .age = <span class="number">2332432</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Person</span> *<span class="title">pp</span> =</span> CONTAINER_OF(&amp;p.age, <span class="keyword">struct</span> Person, age);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name: %s\n&quot;</span>, pp-&gt;name);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dog</span><br></pre></td></tr></table></figure>
+虽然这个样例看起来多此一举，但是这个宏函数在操作系统底层用是很常用的。<br>可以用于C的面向对象设计，类的继承，从父类访问子类。</li>
+</ul>
+<p>原理是啥？<br>其实只要理解了C语言的内存布局，这个就不是问题。</p>
+<h2 id="UPPERCASE-字母大小写转换"><a href="#UPPERCASE-字母大小写转换" class="headerlink" title="UPPERCASE 字母大小写转换"></a>UPPERCASE 字母大小写转换</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> UPPERCASE(c) ( ((c) &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; (c) &lt;= <span class="string">&#x27;z&#x27;</span>) ? ((c) - 0x20) : (c) )</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOWERCASE(c) ( ((c) &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; (c) &lt;= <span class="string">&#x27;z&#x27;</span>) ? (c) : ((c) + 0x20))</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Uppercase: %c -&gt; %c\n&quot;</span>, <span class="string">&#x27;x&#x27;</span>, UPPERCASE(<span class="string">&#x27;x&#x27;</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Lowercase: %c -&gt; %c\n&quot;</span>, <span class="string">&#x27;X&#x27;</span>, LOWERCASE(<span class="string">&#x27;X&#x27;</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Uppercase: x -&gt; X</span><br><span class="line">Lowercase: X -&gt; x</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="ARRAY-SIZE-获取一个数组元素的个数"><a href="#ARRAY-SIZE-获取一个数组元素的个数" class="headerlink" title="ARRAY_SIZE 获取一个数组元素的个数"></a>ARRAY_SIZE 获取一个数组元素的个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ARRAY_SIZE(arr) (sizeof((arr)) / sizeof((arr[0])))</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Person</span> <span class="title">p_arr</span>[10] =</span> &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;p_arr size: %u\n&quot;</span>, ARRAY_SIZE(p_arr));</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">p_arr size: 10</span><br></pre></td></tr></table></figure>
+
+<h2 id="LOG-打印日志"><a href="#LOG-打印日志" class="headerlink" title="LOG 打印日志"></a>LOG 打印日志</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LOG_ON 1</span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> LOG_ON</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOG(fmt, ...) \</span></span><br><span class="line"><span class="meta">    printf(<span class="string">&quot;[FILE: %s] [FUNCTION: %s] [LINE: %d] &quot;</span> fmt <span class="string">&quot;\n&quot;</span>, \</span></span><br><span class="line"><span class="meta">        __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOG(fmt, ...)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">LOG(<span class="string">&quot;一次LOG测试&quot;</span>);</span><br><span class="line">LOG(<span class="string">&quot;测试可变参: %d&quot;</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[FILE: D:\xx.c] [FUNCTION: main] [LINE: 72] 一次debug测试</span><br><span class="line">[FILE: D:\xx.c] [FUNCTION: main] [LINE: 73] 测试可变参: 4</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="FOR-EACH-函数宏递归实现For循环"><a href="#FOR-EACH-函数宏递归实现For循环" class="headerlink" title="FOR_EACH 函数宏递归实现For循环"></a>FOR_EACH 函数宏递归实现For循环</h2><ul>
+<li><code>count</code>： 循环次数，我的这个实现最多只能循环三次，不过你可以继续增加</li>
+<li><code>marco</code>： 相当于回调宏<ul>
+<li><code>idx</code>： 当前枚举下标的，顺序是 <code>count, count - 1, count - 2, ..., 2, 1</code>, 倒序下标</li>
+<li><code>x</code>：这个是枚举的值</li>
+</ul>
+</li>
+<li><code>...</code>：可变参数，枚举的值<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PRIMITIVE_CAT(a,b)   a ## b</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CAT(a,b) PRIMITIVE_CAT(a,b)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INT_DEFINES(idx, x) int CAT(a_, x) = idx</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PRINT(idx, x)    printf(#x<span class="string">&quot;: %d idx: %d\n&quot;</span>, CAT(a_, x), idx)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FOR_EACH(count, marco, ...) CAT(FOR_EACH_, count)(marco, ##__VA_ARGS__)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FOR_EACH_3(marco, arg, ...) marco(3, arg); FOR_EACH_2(marco, ##__VA_ARGS__)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FOR_EACH_2(marco, arg, ...) marco(2, arg); FOR_EACH_1(marco, ##__VA_ARGS__)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FOR_EACH_1(marco, arg, ...) marco(1, arg)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// IF_ELSE (0) ( \</span></span><br><span class="line"><span class="comment">    //     printf(&quot;YES\n&quot;); \</span></span><br><span class="line"><span class="comment">    // )( \</span></span><br><span class="line"><span class="comment">    //     printf(&quot;NO\n&quot;); \</span></span><br><span class="line"><span class="comment">    // )</span></span><br><span class="line">    FOR_EACH(<span class="number">3</span>, INT_DEFINES, dog, cat, pig);</span><br><span class="line">    </span><br><span class="line">    FOR_EACH(<span class="number">3</span>, PRINT, dog, cat, pig);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+宏展开后真实的样子是：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a_dog = <span class="number">3</span>; <span class="type">int</span> a_cat = <span class="number">2</span>; <span class="type">int</span> a_pig = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;dog&quot;</span><span class="string">&quot;: %d idx: %d\n&quot;</span>, a_dog, <span class="number">3</span>); <span class="built_in">printf</span>(<span class="string">&quot;cat&quot;</span><span class="string">&quot;: %d idx: %d\n&quot;</span>, a_cat, <span class="number">2</span>); <span class="built_in">printf</span>(<span class="string">&quot;pig&quot;</span><span class="string">&quot;: %d idx: %d\n&quot;</span>, a_pig, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dog: 3 idx: 3</span><br><span class="line"><span class="built_in">cat</span>: 2 idx: 2</span><br><span class="line">pig: 1 idx: 1</span><br></pre></td></tr></table></figure>
+不得不说，宏的代码可读性确实太差了，哈哈哈！<blockquote>
+<p><strong>注意！！！</strong> 我用<code>MSVC</code>编译上述<code>FOR_EACH</code>宏代码出现了奇怪的问题： <code>x86</code> 的 <code>Microsoft (R) C/C++</code> 优化编译器 <code>19.39.33521</code> 版。<br>但是在 <code>GNU C</code>, <code>Clang</code> 上没有问题，大家也可以自己实验一下。</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>C</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>宏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第一篇post</title>
+    <url>/2024/04/13/%E7%AC%AC%E4%B8%80%E7%AF%87post/</url>
+    <content><![CDATA[<p>这是一个没用的post<br>$a_1$</p>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>废话</tag>
+      </tags>
+  </entry>
+</search>
