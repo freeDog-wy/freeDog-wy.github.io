@@ -20,31 +20,36 @@
     var CONFIG = {"hostname":"elseif.site","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="希望对大家有所帮助">
-<meta property="og:type" content="website">
-<meta property="og:title" content="freeDog的充能杂货铺">
-<meta property="og:url" content="https://elseif.site/index.html">
+  <meta name="description" content="最近在阅读 Fabrice Bellard 巨佬的 quickjs 项目源码，阅读之前我还复习了现代的JavaScript的语法知识，以期望对阅读源码有所帮助。先从最简单的开始，在 quickjs 的源码中有一个 Fabrice Bellard 实现的双向链表实现，整个实现就是一个头文件 list.h。  在本文最下面提供了完整源码，希望对大家有所帮助。  链表结构体1234struct list">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言极简的双向链表实现">
+<meta property="og:url" content="https://elseif.site/2024/04/18/C%E8%AF%AD%E8%A8%80%E6%9E%81%E7%AE%80%E7%9A%84%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="freeDog的充能杂货铺">
-<meta property="og:description" content="希望对大家有所帮助">
+<meta property="og:description" content="最近在阅读 Fabrice Bellard 巨佬的 quickjs 项目源码，阅读之前我还复习了现代的JavaScript的语法知识，以期望对阅读源码有所帮助。先从最简单的开始，在 quickjs 的源码中有一个 Fabrice Bellard 实现的双向链表实现，整个实现就是一个头文件 list.h。  在本文最下面提供了完整源码，希望对大家有所帮助。  链表结构体1234struct list">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-18T08:54:22.000Z">
+<meta property="article:modified_time" content="2024-04-18T10:25:34.244Z">
 <meta property="article:author" content="freeDog">
-<meta property="article:tag" content="C&#x2F;C++,python,kotlin,安卓,Android">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="链表">
+<meta property="article:tag" content="双向链表">
+<meta property="article:tag" content="quickjs">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://elseif.site/">
+<link rel="canonical" href="https://elseif.site/2024/04/18/C%E8%AF%AD%E8%A8%80%E6%9E%81%E7%AE%80%E7%9A%84%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>freeDog的充能杂货铺</title>
+  <title>C语言极简的双向链表实现 | freeDog的充能杂货铺</title>
   
 
 
@@ -192,9 +197,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -210,10 +216,9 @@
       <meta itemprop="name" content="freeDog的充能杂货铺">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/18/C%E8%AF%AD%E8%A8%80%E6%9E%81%E7%AE%80%E7%9A%84%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">C语言极简的双向链表实现</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          C语言极简的双向链表实现
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -247,7 +252,14 @@
                 </span>
             </span>
 
-          <br>
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -272,7 +284,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近在阅读 <code>Fabrice Bellard</code> 巨佬的 <code>quickjs</code> 项目源码，阅读之前我还复习了现代的JavaScript的语法知识，以期望对阅读源码有所帮助。<br>先从最简单的开始，在 <code>quickjs</code> 的源码中有一个 <code>Fabrice Bellard</code> 实现的双向链表实现，整个实现就是一个头文件 <code>list.h</code>。</p>
+        <p>最近在阅读 <code>Fabrice Bellard</code> 巨佬的 <code>quickjs</code> 项目源码，阅读之前我还复习了现代的JavaScript的语法知识，以期望对阅读源码有所帮助。<br>先从最简单的开始，在 <code>quickjs</code> 的源码中有一个 <code>Fabrice Bellard</code> 实现的双向链表实现，整个实现就是一个头文件 <code>list.h</code>。</p>
 <blockquote>
 <p>在本文最下面提供了完整源码，希望对大家有所帮助。</p>
 </blockquote>
@@ -314,292 +326,54 @@
 
 
 <h2 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Linux klist like system</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Copyright (c) 2016-2017 Fabrice Bellard</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Permission is hereby granted, free of charge, to any person obtaining a copy</span></span><br><span class="line"><span class="comment"> * of this software and associated documentation files (the &quot;Software&quot;), to deal</span></span><br><span class="line"><span class="comment"> * in the Software without restriction, including without limitation the rights</span></span><br><span class="line"><span class="comment"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span></span><br><span class="line"><span class="comment"> * copies of the Software, and to permit persons to whom the Software is</span></span><br><span class="line"><span class="comment"> * furnished to do so, subject to the following conditions:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * The above copyright notice and this permission notice shall be included in</span></span><br><span class="line"><span class="comment"> * all copies or substantial portions of the Software.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span></span><br><span class="line"><span class="comment"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span></span><br><span class="line"><span class="comment"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL</span></span><br><span class="line"><span class="comment"> * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span></span><br><span class="line"><span class="comment"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span></span><br><span class="line"><span class="comment"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span></span><br><span class="line"><span class="comment"> * THE SOFTWARE.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> LIST_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LIST_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> NULL</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stddef.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> *<span class="title">prev</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LIST_HEAD_INIT(el) &#123; &amp;(el), &amp;(el) &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CONTAINER_OF(ptr, type, member) \</span></span><br><span class="line"><span class="meta">    (type *)((char *)(ptr) - (char *) &amp;((type *)0)-&gt;member)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* return the pointer of type &#x27;type *&#x27; containing &#x27;el&#x27; as field &#x27;member&#x27; */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> list_entry(el, type, member) CONTAINER_OF(el, type, member)</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">init_list_head</span><span class="params">(<span class="keyword">struct</span> list_head *head)</span></span><br><span class="line">&#123;</span><br><span class="line">    head-&gt;prev = head;</span><br><span class="line">    head-&gt;next = head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* insert &#x27;el&#x27; between &#x27;prev&#x27; and &#x27;next&#x27; */</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> __list_add(<span class="keyword">struct</span> list_head *el,</span><br><span class="line">                              <span class="keyword">struct</span> list_head *prev, <span class="keyword">struct</span> list_head *next)</span><br><span class="line">&#123;</span><br><span class="line">    prev-&gt;next = el;</span><br><span class="line">    el-&gt;prev = prev;</span><br><span class="line">    el-&gt;next = next;</span><br><span class="line">    next-&gt;prev = el;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* add &#x27;el&#x27; at the head of the list &#x27;head&#x27; (= after element head) */</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">list_add</span><span class="params">(<span class="keyword">struct</span> list_head *el, <span class="keyword">struct</span> list_head *head)</span></span><br><span class="line">&#123;</span><br><span class="line">    __list_add(el, head, head-&gt;next);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* add &#x27;el&#x27; at the end of the list &#x27;head&#x27; (= before element head) */</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">list_add_tail</span><span class="params">(<span class="keyword">struct</span> list_head *el, <span class="keyword">struct</span> list_head *head)</span></span><br><span class="line">&#123;</span><br><span class="line">    __list_add(el, head-&gt;prev, head);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">list_del</span><span class="params">(<span class="keyword">struct</span> list_head *el)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> *<span class="title">prev</span>, *<span class="title">next</span>;</span></span><br><span class="line">    prev = el-&gt;prev;</span><br><span class="line">    next = el-&gt;next;</span><br><span class="line">    prev-&gt;next = next;</span><br><span class="line">    next-&gt;prev = prev;</span><br><span class="line">    el-&gt;prev = <span class="literal">NULL</span>; <span class="comment">/* fail safe */</span></span><br><span class="line">    el-&gt;next = <span class="literal">NULL</span>; <span class="comment">/* fail safe */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">int</span> <span class="title function_">list_empty</span><span class="params">(<span class="keyword">struct</span> list_head *el)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> el-&gt;next == el;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> list_for_each(el, head) \</span></span><br><span class="line"><span class="meta">  for(el = (head)-&gt;next; el != (head); el = el-&gt;next)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> list_for_each_safe(el, el1, head)                \</span></span><br><span class="line"><span class="meta">    for(el = (head)-&gt;next, el1 = el-&gt;next; el != (head); \</span></span><br><span class="line"><span class="meta">        el = el1, el1 = el-&gt;next)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> list_for_each_prev(el, head) \</span></span><br><span class="line"><span class="meta">  for(el = (head)-&gt;prev; el != (head); el = el-&gt;prev)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> list_for_each_prev_safe(el, el1, head)           \</span></span><br><span class="line"><span class="meta">    for(el = (head)-&gt;prev, el1 = el-&gt;prev; el != (head); \</span></span><br><span class="line"><span class="meta">        el = el1, el1 = el-&gt;prev)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">/* LIST_H */</span></span></span><br></pre></td></tr></table></figure>
-      
     </div>
 
     
     
     
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://elseif.site/2024/04/14/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E9%82%A3%E4%BA%9B%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AE%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s2.loli.net/2024/04/13/lojMg3VZudQt1AP.jpg">
-      <meta itemprop="name" content="freeDog">
-      <meta itemprop="description" content="希望对大家有所帮助">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="freeDog的充能杂货铺">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/14/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E9%82%A3%E4%BA%9B%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AE%8F/" class="post-title-link" itemprop="url">C语言中那些奇奇怪怪的宏</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-14 11:00:47" itemprop="dateCreated datePublished" datetime="2024-04-14T11:00:47+08:00">2024-04-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-18 16:55:01" itemprop="dateModified" datetime="2024-04-18T16:55:01+08:00">2024-04-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">C语言</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天整理了一下C语言一些奇奇怪怪的宏，给大家瞧一瞧。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/04/14/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E9%82%A3%E4%BA%9B%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AE%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>freeDog
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://elseif.site/2024/04/18/C%E8%AF%AD%E8%A8%80%E6%9E%81%E7%AE%80%E7%9A%84%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0/" title="C语言极简的双向链表实现">https://elseif.site/2024/04/18/C语言极简的双向链表实现/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://elseif.site/2024/04/13/%E7%AC%AC%E4%B8%80%E7%AF%87post/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s2.loli.net/2024/04/13/lojMg3VZudQt1AP.jpg">
-      <meta itemprop="name" content="freeDog">
-      <meta itemprop="description" content="希望对大家有所帮助">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="freeDog的充能杂货铺">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/04/13/%E7%AC%AC%E4%B8%80%E7%AF%87post/" class="post-title-link" itemprop="url">第一篇post</a>
-        </h2>
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag"><i class="fa fa-tag"></i> 链表</a>
+              <a href="/tags/%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/" rel="tag"><i class="fa fa-tag"></i> 双向链表</a>
+              <a href="/tags/quickjs/" rel="tag"><i class="fa fa-tag"></i> quickjs</a>
+          </div>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        
 
-              <time title="创建时间：2024-04-13 20:46:41" itemprop="dateCreated datePublished" datetime="2024-04-13T20:46:41+08:00">2024-04-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-14 00:14:43" itemprop="dateModified" datetime="2024-04-14T00:14:43+08:00">2024-04-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">日常</span></a>
-                </span>
-            </span>
 
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>16</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这是一个没用的post<br>$a_1$</p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/14/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E9%82%A3%E4%BA%9B%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AE%8F/" rel="prev" title="C语言中那些奇奇怪怪的宏">
+      <i class="fa fa-chevron-left"></i> C语言中那些奇奇怪怪的宏
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://elseif.site/2024/04/13/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s2.loli.net/2024/04/13/lojMg3VZudQt1AP.jpg">
-      <meta itemprop="name" content="freeDog">
-      <meta itemprop="description" content="希望对大家有所帮助">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="freeDog的充能杂货铺">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/13/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-13 17:21:41" itemprop="dateCreated datePublished" datetime="2024-04-13T17:21:41+08:00">2024-04-13</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>367</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -652,6 +426,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">1.</span> <span class="nav-text">链表结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%91%A2%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">如何使用呢？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E5%A4%B4"><span class="nav-number">2.</span> <span class="nav-text">链表头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%91%E9%93%BE%E8%A1%A8%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">向链表添加数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8for%E5%BE%AA%E7%8E%AF"><span class="nav-number">4.</span> <span class="nav-text">链表for循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9%E5%88%A0%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">链表节点删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E6%B8%85%E7%A9%BA"><span class="nav-number">6.</span> <span class="nav-text">链表清空</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">7.</span> <span class="nav-text">源码实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -845,59 +620,6 @@ setInterval("createtime()",250);
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 
