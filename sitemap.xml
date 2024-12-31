@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://elseif.site/2024/12/31/2025%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4/</loc>
+    
+    <lastmod>2024-12-31</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://elseif.site/2024/04/18/C%E8%AF%AD%E8%A8%80%E6%9E%81%E7%AE%80%E7%9A%84%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0/</loc>
     
     <lastmod>2024-04-18</lastmod>
@@ -76,7 +85,7 @@
 
   <url>
     <loc>https://elseif.site/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -84,49 +93,49 @@
   
   <url>
     <loc>https://elseif.site/tags/C%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/tags/%E5%AE%8F/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/tags/C/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/tags/%E9%93%BE%E8%A1%A8/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/tags/%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/tags/quickjs/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/tags/%E5%BA%9F%E8%AF%9D/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -135,35 +144,35 @@
   
   <url>
     <loc>https://elseif.site/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/categories/%E6%97%A5%E5%B8%B8/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://elseif.site/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%93%BE%E8%A1%A8/</loc>
-    <lastmod>2024-12-26</lastmod>
+    <lastmod>2024-12-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
